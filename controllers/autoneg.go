@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/cenkalti/backoff"
@@ -27,11 +28,11 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
-const (
-	autonegAnnotation             = "anthos.cft.dev/autoneg"
-	autonegStatusAnnotation       = "anthos.cft.dev/autoneg-status"
+var (
+	autonegAnnotation             = fmt.Sprintf("anthos.cft.dev/autoneg%s", os.Getenv("AUTONEG_INSTANCE"))
+	autonegStatusAnnotation       = fmt.Sprintf("%s-status", autonegAnnotation)
 	negStatusAnnotation           = "cloud.google.com/neg-status"
-	autonegFinalizer              = "anthos.cft.dev/autoneg"
+	autonegFinalizer              = autonegAnnotation
 	computeOperationStatusDone    = "DONE"
 	computeOperationStatusRunning = "RUNNING"
 	computeOperationStatusPending = "PENDING"
